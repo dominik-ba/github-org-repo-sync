@@ -25,11 +25,7 @@ def _read_token() -> str:
     :return: token
     """
 
-    token_file_path = "~/.github-token"
-    if args.token_file_path:
-        token_file_path = args.token_file_path
-
-    with open(os.path.expanduser(token_file_path)) as f:
+    with open(os.path.expanduser(args.token_file_path)) as f:
         return f.readline().strip()
 
 
@@ -180,7 +176,8 @@ if __name__ == "__main__":
     group.add_argument(
         "-p",
         "--token_file_path",
-        help="The path to the token file."
+        help="The path to the token file.",
+        default="~/.github-token"
     )
     parser.add_argument(
         "-o",
