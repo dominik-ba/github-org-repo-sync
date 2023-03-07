@@ -18,6 +18,8 @@ python3 clone_all_repos_from_org.py
 
 python3 clone_all_repos_from_org.py -e --base-url git.company.com
 
+python3 clone_all_repos_from_org.py -se --base-url git.company.com
+
 python3 clone_all_repos_from_org.py -p ~/.secrets/my-github.token
 ```
 
