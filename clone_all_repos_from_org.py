@@ -4,6 +4,7 @@ import requests
 import subprocess
 import argparse
 import os
+import shutil
 
 
 help_text = """
@@ -67,7 +68,7 @@ def cleanup_folder_diff(all_repo_names):
     print("Deleting the folders...")
     for folder in diff:
         path_to_delete = os.path.join(".", folder)
-        os.removedirs(path_to_delete)
+        shutil.rmtree(path_to_delete)
 
 
 def clone_all_repos(repository_names):
