@@ -127,11 +127,12 @@ def get_repository_details():
     response = session.get(api_url, headers=headers)
     if response.status_code == 200:
         yield response.json()
+        next_page = response
 
-        while response.links.get("next", None):
-            next_page = session.get(
-                response.links["next"]["url"], headers=headers).json()
-            yield next_page
+        while next_page.links.get("next", None):
+            next_url = next_page.links["next"]["url"]
+            next_page = session.get(next_url, headers=headers)
+            yield next_page.json()
 
     else:
         print(response.status_code)
@@ -151,7 +152,6 @@ def get_org_name():
 
 if __name__ == "__main__":
     # Set up command line argument parsing
-    help
     parser = argparse.ArgumentParser(
         description=help_text,
         add_help=True
@@ -210,6 +210,7 @@ if __name__ == "__main__":
     all_repos = []
     for repository_page in get_repository_details():
         all_repos += extract_repository_list(repository_page)
+        print(f"Parsed {len(all_repos)} repos")
 
     print("Cloning all repositories...")
     clone_all_repos(all_repos)
